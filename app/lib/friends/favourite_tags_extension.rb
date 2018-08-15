@@ -7,11 +7,12 @@ module Friends
       after_create :add_default_favourite_tag
 
       DEFAULT_TAGS = [
-        "デレラジ",
-        "デレパ",
-        "imasstation",
-        "millionradio",
-        "SideM",
+        "あおのざつだん",
+        "imas",
+        "imas_cg",
+        "imas_ml",
+        "imas_sidem",
+        "シャニマス",
       ].freeze
 
       def add_default_favourite_tag
