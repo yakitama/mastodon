@@ -74,7 +74,7 @@ const initialState = ImmutableMap({
 
 const defaultColumns = fromJS([
   { id: 'COMPOSE', uuid: uuid(), params: {} },
-  { id: 'COMMUNITY', uuid: uuid(), params: {} },
+  { id: 'HASHTAG', uuid: uuid(), params: { id: "あおのざつだん" } },
   { id: 'NOTIFICATIONS', uuid: uuid(), params: {} },
   { id: 'HOME', uuid: uuid(), params: {} },
 ]);
