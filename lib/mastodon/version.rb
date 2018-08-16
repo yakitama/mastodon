@@ -33,7 +33,7 @@ module Mastodon
     end
 
     def source_base_url
-      'https://github.com/imas/mastodon'
+      'https://github.com/bluenapoleon/mastodon'
     end
 
     def source_link_title
