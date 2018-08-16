@@ -13,14 +13,14 @@
       .column-0
         .brand
           = link_to root_url do
-            = image_tag asset_pack_path('logo_full.svg'), alt: 'iMastodon'
+            = image_tag asset_pack_path('logo.png'), alt: 'iMastodon'
 
       - if Setting.timeline_preview
         .column-1
           .landing-page__forms
             .brand
               = link_to root_url do
-                = image_tag asset_pack_path('logo_full.svg'), alt: 'Mastodon'
+                = image_tag asset_pack_path('logo.png'), alt: 'Mastodon'
 
             = render 'forms'
 
@@ -29,7 +29,7 @@
           .landing-page__forms
             .brand
               = link_to root_url do
-                = image_tag asset_pack_path('logo_full.svg'), alt: 'Mastodon'
+                = image_tag asset_pack_path('logo.png'), alt: 'Mastodon'
 
             = render 'forms'
 
