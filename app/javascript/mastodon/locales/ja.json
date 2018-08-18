@@ -66,6 +66,7 @@
   "compose_form.hashtag_warning": "公開範囲が未収載より狭いのでこのまま投稿するとハッシュタグTLに表示されません。公開範囲が公開または未収載であるトゥートだけがハッシュタグTLに表示されます。",
   "compose_form.lock_disclaimer": "あなたのアカウントは{locked}になっていません。誰でもあなたをフォローすることができ、フォロワー限定の投稿を見ることができます。",
   "compose_form.lock_disclaimer.lock": "承認制",
+  "compose_form.needs_hashtag": "このインスタンスでは、公開範囲publicで投稿する際一つ以上のハッシュタグを付与してください。",
   "compose_form.placeholder": "今なにしてる？",
   "compose_form.publish": "トゥート",
   "compose_form.publish_loud": "{publish}！",
