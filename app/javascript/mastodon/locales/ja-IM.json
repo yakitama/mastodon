@@ -66,6 +66,7 @@
   "compose_form.hashtag_warning": "公開範囲が社内より狭いのでこのまま投稿するとハッシュタグTLに表示されません。公開範囲が公開または社内であるあふぅだけがハッシュタグTLに表示されます。",
   "compose_form.lock_disclaimer": "あなたのアカウントは{locked}になっていません。誰でもあなたをフォローすることができ、私的資料のあふぅを見ることができます。",
   "compose_form.lock_disclaimer.lock": "承認制",
+  "compose_form.needs_hashtag": "このインスタンスでは、公開範囲publicで投稿する際一つ以上のハッシュタグを付与してください。",
   "compose_form.placeholder": "もう時間がないんです！",
   "compose_form.publish": "あふぅ...",
   "compose_form.publish_loud": "あふぅ",
