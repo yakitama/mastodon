@@ -9,10 +9,11 @@ module Friends
       DEFAULT_TAGS = [
         "あおのざつだん",
         "imas",
+        "imas_as",
         "imas_cg",
         "imas_ml",
         "imas_sidem",
-        "シャニマス",
+        "imas_sc",
       ].freeze
 
       def add_default_favourite_tag
