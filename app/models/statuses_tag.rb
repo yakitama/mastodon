@@ -12,7 +12,7 @@ class StatusesTag < ApplicationRecord
 
     def update_trend_tags
       now, level_l, trend_l = get_data
-      score, level_now, trend_now = calc_score(level_l, trend_l, now)
+      score, level_now, trend_now = calc_score(level_l, trend_l, now / 2)
       put_data(score, level_now, trend_now)
     end
 
@@ -84,7 +84,7 @@ class StatusesTag < ApplicationRecord
       [gamma * (level - level_last) + (1 - gamma) * trend_last, 0].max # return 0 if trend is negative
     end
 
-    def aggregate_tags_in(t: 10.minutes, until_t: Time.now.utc)
+    def aggregate_tags_in(t: 20.minutes, until_t: Time.now.utc)
       status_ids = status_ids_in((until_t - t)..until_t)
       StatusesTag.where(status_id: status_ids).group(:tag_id).count.map{|k, v| [k.to_s, v]}.to_h
     end
