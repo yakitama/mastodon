@@ -23,7 +23,7 @@ class StatusesTag < ApplicationRecord
         redis.hset('trend_tags_management_data', 'updated_at', Time.now.utc.iso8601)
       end
       [
-        aggregate_tags_in,
+        aggregate_tags_in(20.min),
         get_previous_data('trend_tags_management_data', 'level_L'),
         get_previous_data('trend_tags_management_data', 'trend_L')
       ]
@@ -84,7 +84,7 @@ class StatusesTag < ApplicationRecord
       [gamma * (level - level_last) + (1 - gamma) * trend_last, 0].max # return 0 if trend is negative
     end
 
-    def aggregate_tags_in(t: 20.minutes, until_t: Time.now.utc)
+    def aggregate_tags_in(t: 10.minutes, until_t: Time.now.utc)
       status_ids = status_ids_in((until_t - t)..until_t)
       StatusesTag.where(status_id: status_ids).group(:tag_id).count.map{|k, v| [k.to_s, v]}.to_h
     end
