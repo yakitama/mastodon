@@ -12,7 +12,7 @@ class StatusesTag < ApplicationRecord
 
     def update_trend_tags
       now, level_l, trend_l = get_data
-      score, level_now, trend_now = calc_score(level_l, trend_l, now / 2)
+      score, level_now, trend_now = calc_score(level_l, trend_l, now.map{|k,v|[k, v/2]}.to_h)
       put_data(score, level_now, trend_now)
     end
 
