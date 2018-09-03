@@ -23,7 +23,7 @@ class StatusesTag < ApplicationRecord
         redis.hset('trend_tags_management_data', 'updated_at', Time.now.utc.iso8601)
       end
       [
-        aggregate_tags_in(20.min),
+        aggregate_tags_in(t: 20.minutes),
         get_previous_data('trend_tags_management_data', 'level_L'),
         get_previous_data('trend_tags_management_data', 'trend_L')
       ]
