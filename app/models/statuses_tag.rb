@@ -12,7 +12,7 @@ class StatusesTag < ApplicationRecord
 
     def update_trend_tags
       now, level_l, trend_l = get_data
-      score, level_now, trend_now = calc_score(level_l, trend_l, now)
+      score, level_now, trend_now = calc_score(level_l, trend_l, now.map{|k,v|[k, v/2]}.to_h)
       put_data(score, level_now, trend_now)
     end
 
@@ -23,7 +23,7 @@ class StatusesTag < ApplicationRecord
         redis.hset('trend_tags_management_data', 'updated_at', Time.now.utc.iso8601)
       end
       [
-        aggregate_tags_in,
+        aggregate_tags_in(t: 20.minutes),
         get_previous_data('trend_tags_management_data', 'level_L'),
         get_previous_data('trend_tags_management_data', 'trend_L')
       ]
