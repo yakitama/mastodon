@@ -9,11 +9,12 @@ const APPROX_HASHTAG_RE = /(?:^|[^\/\)\w])#(\w*[a-zA-Z·]\w*)/i;
 
 const mapStateToProps = state => ({
   needsLockWarning: state.getIn(['compose', 'privacy']) === 'private' && !state.getIn(['accounts', me, 'locked']),
+  needsHashtagWarning: state.getIn(['compose', 'privacy']) === 'public' && !APPROX_HASHTAG_RE.test(state.getIn(['compose', 'text'])),
   hashtagWarning: ['private', 'direct'].includes(state.getIn(['compose', 'privacy'])) && APPROX_HASHTAG_RE.test(state.getIn(['compose', 'text'])),
   directMessageWarning: state.getIn(['compose', 'privacy']) === 'direct',
 });
 
-const WarningWrapper = ({ needsLockWarning, hashtagWarning, directMessageWarning }) => {
+const WarningWrapper = ({ needsLockWarning, needsHashtagWarning, hashtagWarning, directMessageWarning }) => {
   if (needsLockWarning) {
     return <Warning message={<FormattedMessage id='compose_form.lock_disclaimer' defaultMessage='Your account is not {locked}. Anyone can follow you to view your follower-only posts.' values={{ locked: <a href='/settings/profile'><FormattedMessage id='compose_form.lock_disclaimer.lock' defaultMessage='locked' /></a> }} />} />;
   }
@@ -21,8 +22,8 @@ const WarningWrapper = ({ needsLockWarning, hashtagWarning, directMessageWarning
   if (hashtagWarning) {
     return <Warning message={<FormattedMessage id='compose_form.hashtag_warning' defaultMessage="This toot won't be listed under any hashtag as it is unlisted. Only public toots can be searched by hashtag." />} />;
   }
-  if (needsLockWarning) {
-    return <Warning message={<FormattedMessage id='compose_form.lock_disclaimer' defaultMessage='Your account is not {locked}. Anyone can follow you to view your follower-only posts.' values={{ locked: <a href='/settings/profile'><FormattedMessage id='compose_form.lock_disclaimer.lock' defaultMessage='locked' /></a> }} />} />;
+  if (needsHashtagWarning) {
+    return <Warning message={<FormattedMessage id='compose_form.needs_hashtag' defaultMessage='In this instance, You must add at least one hashtag when you post publicly.' />} />;
   }
 
   if (directMessageWarning) {
@@ -40,6 +41,7 @@ const WarningWrapper = ({ needsLockWarning, hashtagWarning, directMessageWarning
 
 WarningWrapper.propTypes = {
   needsLockWarning: PropTypes.bool,
+  needsHashtagWarning: PropTypes.bool,
   hashtagWarning: PropTypes.bool,
   directMessageWarning: PropTypes.bool,
 };

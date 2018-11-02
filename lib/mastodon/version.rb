@@ -33,7 +33,7 @@ module Mastodon
     end
 
     def repository
-      'imas/mastodon'
+      'bluenapoleon/mastodon'
     end
 
     def source_base_url
