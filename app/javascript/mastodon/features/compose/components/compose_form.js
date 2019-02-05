@@ -27,8 +27,12 @@ const messages = defineMessages({
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
 });
 
-@injectIntl
-export default class ComposeForm extends ImmutablePureComponent {
+export default @injectIntl
+class ComposeForm extends ImmutablePureComponent {
+
+  static contextTypes = {
+    router: PropTypes.object,
+  };
 
   static propTypes = {
     intl: PropTypes.object.isRequired,
@@ -84,7 +88,7 @@ export default class ComposeForm extends ImmutablePureComponent {
       return;
     }
 
-    this.props.onSubmit();
+    this.props.onSubmit(this.context.router ? this.context.router.history : null);
   }
 
   onSuggestionsClearRequested = () => {
@@ -126,8 +130,8 @@ export default class ComposeForm extends ImmutablePureComponent {
       this.autosuggestTextarea.textarea.setSelectionRange(selectionStart, selectionEnd);
       this.autosuggestTextarea.textarea.focus();
     } else if(prevProps.is_submitting && !this.props.is_submitting) {
+      this.autosuggestTextarea.textarea.setSelectionRange(0, 0)
       this.autosuggestTextarea.textarea.focus();
-      this.autosuggestTextarea.textarea.setSelectionRange(0, 0);
     } else if (this.props.spoiler !== prevProps.spoiler) {
       if (this.props.spoiler) {
         this.spoilerText.focus();
