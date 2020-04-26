@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ActivityPub::Activity::Create do
-  let(:sender) { Fabricate(:account, followers_url: 'http://example.com/followers') }
+  let(:sender) { Fabricate(:account, followers_url: 'http://example.com/followers', domain: 'example.com', uri: 'https://example.com/actor') }
 
   let(:json) do
     {
@@ -26,6 +26,20 @@ RSpec.describe ActivityPub::Activity::Create do
 
       before do
         subject.perform
+      end
+
+      context 'unknown object type' do
+        let(:object_json) do
+          {
+            id: [ActivityPub::TagManager.instance.uri_for(sender), '#bar'].join,
+            type: 'Banana',
+            content: 'Lorem ipsum',
+          }
+        end
+
+        it 'does not create a status' do
+          expect(sender.statuses.count).to be_zero
+        end
       end
 
       context 'standalone' do
@@ -407,7 +421,6 @@ RSpec.describe ActivityPub::Activity::Create do
           expect(status).to_not be_nil
         end
       end
-    end
 
     context 'when sender is followed by local users' do
       subject { described_class.new(json, sender, delivery: true) }
@@ -509,7 +522,6 @@ RSpec.describe ActivityPub::Activity::Create do
         expect(status).to_not be_nil
         expect(status.text).to eq 'Lorem ipsum'
       end
-    end
 
     context 'when the sender has no relevance to local activity' do
       subject { described_class.new(json, sender, delivery: true) }

@@ -9,7 +9,7 @@ module Mastodon
     end
 
     def minor
-      7
+      8
     end
 
     def patch
@@ -33,20 +33,16 @@ module Mastodon
     end
 
     def repository
-      'bluenapoleon/mastodon'
+      ENV.fetch('GITHUB_REPOSITORY') { 'tootsuite/mastodon' }
     end
 
     def source_base_url
-      "https://github.com/#{repository}"
-    end
-
-    def source_link_title
-      source_url.sub('https://github.com/', '')
+      ENV.fetch('SOURCE_BASE_URL') { "https://github.com/#{repository}" }
     end
 
     # specify git tag or commit hash here
     def source_tag
-      nil
+      ENV.fetch('SOURCE_TAG') { nil }
     end
 
     def source_url

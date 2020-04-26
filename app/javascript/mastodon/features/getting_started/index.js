@@ -7,11 +7,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import { me, invitesEnabled, version, profile_directory } from '../../initial_state';
+import { me, invitesEnabled, version, profile_directory, repository, source_url } from '../../initial_state';
 import { fetchFollowRequests } from '../../actions/accounts';
 import { List as ImmutableList } from 'immutable';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../compose/components/navigation_bar';
+import Icon from 'mastodon/components/icon';
 
 const messages = defineMessages({
   home_timeline: { id: 'tabs_bar.home', defaultMessage: 'Home' },
@@ -38,8 +39,6 @@ const messages = defineMessages({
 
 const mapStateToProps = state => ({
   myAccount: state.getIn(['accounts', me]),
-  github_url: state.getIn(['meta', 'github_url']),
-  github_name: state.getIn(['meta', 'github_name']),
   unreadFollowRequests: state.getIn(['user_lists', 'follow_requests', 'items'], ImmutableList()).size,
 });
 
@@ -66,8 +65,6 @@ class GettingStarted extends ImmutablePureComponent {
     myAccount: ImmutablePropTypes.map.isRequired,
     columns: ImmutablePropTypes.list,
     multiColumn: PropTypes.bool,
-    github_url: PropTypes.string.isRequired,
-    github_name: PropTypes.string.isRequired,
     fetchFollowRequests: PropTypes.func.isRequired,
     unreadFollowRequests: PropTypes.number,
     unreadNotifications: PropTypes.number,
@@ -82,7 +79,7 @@ class GettingStarted extends ImmutablePureComponent {
   }
 
   render () {
-    const { intl, myAccount, multiColumn, github_url, github_name, unreadFollowRequests } = this.props;
+    const { intl, myAccount, multiColumn, unreadFollowRequests } = this.props;
 
     const navItems = [];
     let i = 1;
@@ -150,7 +147,7 @@ class GettingStarted extends ImmutablePureComponent {
         {multiColumn && <div className='column-header__wrapper'>
           <h1 className='column-header'>
             <button>
-              <i className='fa fa-bars fa-fw column-header__icon' />
+              <Icon id='bars' className='column-header__icon' fixedWidth />
               <FormattedMessage id='getting_started.heading' defaultMessage='Getting started' />
             </button>
           </h1>
@@ -169,7 +166,7 @@ class GettingStarted extends ImmutablePureComponent {
               {invitesEnabled && <li><a href='/invites' target='_blank'><FormattedMessage id='getting_started.invite' defaultMessage='Invite people' /></a> · </li>}
               {multiColumn && <li><Link to='/keyboard-shortcuts'><FormattedMessage id='navigation_bar.keyboard_shortcuts' defaultMessage='Hotkeys' /></Link> · </li>}
               <li><a href='/auth/edit'><FormattedMessage id='getting_started.security' defaultMessage='Security' /></a> · </li>
-              <li><a href='/about/more' target='_blank'><FormattedMessage id='navigation_bar.info' defaultMessage='About this instance' /></a> · </li>
+              <li><a href='/about/more' target='_blank'><FormattedMessage id='navigation_bar.info' defaultMessage='About this server' /></a> · </li>
               <li><a href='https://joinmastodon.org/apps' target='_blank'><FormattedMessage id='navigation_bar.apps' defaultMessage='Mobile apps' /></a> · </li>
               <li><a href='/terms' target='_blank'><FormattedMessage id='getting_started.terms' defaultMessage='Terms of service' /></a> · </li>
               <li><a href='/settings/applications' target='_blank'><FormattedMessage id='getting_started.developers' defaultMessage='Developers' /></a> · </li>
@@ -181,7 +178,7 @@ class GettingStarted extends ImmutablePureComponent {
               <FormattedMessage
                 id='getting_started.open_source_notice'
                 defaultMessage='Mastodon is open source software. You can contribute or report issues on GitHub at {github}.'
-                values={{ github: <span><a href={github_url} rel='noopener' target='_blank'>{github_name}</a> (v{version})</span> }}
+                values={{ github: <span><a href={source_url} rel='noopener' target='_blank'>{repository}</a> (v{version})</span> }}
               />
             </p>
           </div>
