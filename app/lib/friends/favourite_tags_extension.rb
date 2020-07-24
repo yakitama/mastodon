@@ -21,7 +21,6 @@ module Friends
           self.favourite_tags.create!(visibility: 'unlisted', tag: Tag.find_or_create_by!(name: tag_name), order: (DEFAULT_TAGS.length - i))
         end
       end
-
     end
   end
 end
